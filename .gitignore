@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+BackEnd/node_modules/
 
 # IntelliJ related
 *.iml
