@@ -9,6 +9,7 @@
 .history
 .svn/
 BackEnd/node_modules/
+BackEnd/uploads/
 
 # IntelliJ related
 *.iml

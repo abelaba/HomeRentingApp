@@ -1,16 +1,21 @@
-# home_renting_app
+# Description
 
-A new Flutter project.
+An application designed for making home rentals easier. Lets landlords post their homes and let renters view available homes for rent, while also allowing landlords and tenants communicate with each other.
 
-## Getting Started
+# Feature list
 
-This project is a starting point for a Flutter application.
+### Feature 1:-
 
-A few resources to get you started if this is your first Flutter project:
+    	Post and view rooms/apartments/ houses for rent.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Feature 2:-
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    	Allow tenants to communicate with their existing landlords.
+
+## Group Members
+
+    1. Abel Abate Atr/6618/11 section 1
+    2. Abel Ashine ATR/9022/12 section 1
+    3. Mercy Habte ATR/8154/11 section 1
+    4. Ruth Zaid ATR/2541/11 section 1
+    5. Yonatan Moges ATR/0165/11 section 2
