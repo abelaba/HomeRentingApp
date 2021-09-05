@@ -5,65 +5,64 @@ const { rentalValidation } = require('../validation')
 // const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
 const verify = require('../verifyToken');
+const formidable = require("formidable");
 
 
 // * FOR HANDLING IMAGE UPLOAD
 const fs = require('fs');
-// const path = require('path');
-const multer = require('multer');
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './uploads')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
-    }
-});
+const path = require('path');
 
-// * FILE FILTER
-const fileFilter = (req, file, cb)=>{
-    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
-        cb(null,true);
-    }else{
-        cb(null, false);
-    }  
-};
-
-const upload = multer({ 
-    storage: storage,
-    limits:{
-        fileSize: 1024 * 1025
-    },
-    fileFilter : fileFilter
- });
 
 
 // * ADD RENTAL PROPERTY
 router.post('/add', verify, upload.single('rentalImage') , async (req, res) => {
 
-    console.log(req.file);
-    // * LETS VALIDATE THE DATA
-    const { error } = rentalValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    
+    const form = formidable.IncomingForm();
+    // console.log(form);
+    form.multiples = true;
+    form.maxFileSize = 50 * 1024 * 1024; // 5MB
+    // console.log(form);
 
-    const findUser = await User.findOne({ _id: req.user });
-    if(!findUser) return res.status(404).send("User not Found");
+    form.parse(req, async (err, fields, files) => {
+        console.log(fields.address);
+        const { error } = rentalValidation(fields);
+        if (error) {
+            console.log(error)
+            return res.status(400).send(error.details[0].message)};
 
-    // * CREATE A NEW RENTAL PROPERTY
-    const rental = new Rental({
-        userId: findUser._id,
-        address: req.body.address,
-        rentalImage: req.file.path
+        const findUser = await User.findOne({ _id: req.user });
+        if(!findUser) return res.status(404).send("User not Found");
+
+        var oldPath = files.rentalImage.path;
+        var newFileName = "rentalImage"+ Date.now() + ".jpg";
+        var newPath = path.join(__dirname, '../uploads')+ '/' + newFileName;
+        console.log(newFileName);
+        console.log(fields.address);
+        var rawData = fs.readFileSync(oldPath);
+
+        // * CREATE A NEW RENTAL PROPERTY
+        const rental = new Rental({
+            userId: findUser._id,
+            address: fields.address,
+            rentalImage: `uploads/${newFileName}`
+        });
+
+        try {
+            fs.writeFile(newPath, rawData, function(err){
+                if(err) {
+                    console.log(err);
+                    return res.statusCode(500).send("Couldn't write file");
+                }
+            });
+            const savedRental = await rental.save();
+            console.log("Success");
+            res.status(201).send({ rental: rental._id });
+        } catch (err) {
+            console.log("error");
+            res.status(400).send(err);
+        }
+
     });
-
-    try {
-        const savedRental = await rental.save();
-        res.status(201).send({ rental: rental._id });
-    } catch (err) {
-        console.log("error");
-        res.status(400).send(err);
-    }
 });
 
 
