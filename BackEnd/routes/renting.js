@@ -70,9 +70,8 @@ router.post('/add', verify , async (req, res) => {
 router.get('/viewAll', async (req, res) => {
 
     const query = await Rental.find();
-    if(query.length!=0) return res.send(query);
+    return res.send(query);
 
-    res.status(404).send("Properties not found.")
 
 });
 
@@ -81,9 +80,8 @@ router.get('/viewAll', async (req, res) => {
 router.get('/viewMyProperties', verify , async (req, res) => {
 
     const query = await Rental.find({ userId: req.user._id });
-    if(query.length!=0) return res.send(query);
+    return res.send(query);
 
-    res.status(404).send("Property not found.")
 
 });
 
