@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'rental_add_update.dart';
 import 'rental_detail.dart';
-import 'rental_route.dart';
+import '../../routes.dart';
 
 class RentalList extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = 'rentalList';
 
   @override
   _RentalListState createState() => _RentalListState();
@@ -24,6 +24,7 @@ class _RentalListState extends State<RentalList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Container(),
         title: Text('My properties'),
       ),
       body: BlocBuilder<RentalBloc, RentalState>(

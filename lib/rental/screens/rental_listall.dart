@@ -5,7 +5,7 @@ import 'package:home_renting_app/rental/screens/rental_detail_noedit.dart';
 
 import 'rental_add_update.dart';
 import 'rental_detail.dart';
-import 'rental_route.dart';
+import '../../routes.dart';
 
 class RentalListAll extends StatefulWidget {
   static const routeName = '/';
@@ -24,10 +24,8 @@ class _RentalListAllState extends State<RentalListAll> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Column(),
-      ),
       appBar: AppBar(
+        leading: Container(),
         title: Text('All properties'),
       ),
       body: BlocBuilder<RentalBloc, RentalState>(

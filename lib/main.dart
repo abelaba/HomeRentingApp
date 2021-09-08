@@ -1,52 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_renting_app/auth/bloc/login/login_bloc.dart';
+import 'package:home_renting_app/auth/bloc/signup/signup_bloc.dart';
+import 'package:home_renting_app/auth/data-provider/auth-data-provider.dart';
+import 'package:home_renting_app/auth/repository/authRepository.dart';
+import 'package:home_renting_app/rental/blocs/blocs.dart';
 import 'package:home_renting_app/rental/blocs/image/image_bloc.dart';
+import 'package:home_renting_app/rental/data_providers/rental-data-provider.dart';
+import 'package:home_renting_app/rental/repository/rental-repository.dart';
+import 'package:home_renting_app/routes.dart';
 
-import 'rental/bloc_observer.dart';
-import 'rental/blocs/blocs.dart';
-import 'rental/data_providers/rental-data-provider.dart';
-import 'rental/repository/rental-repository.dart';
-import 'rental/screens/rental_route.dart';
+import 'package:home_renting_app/bloc_observer.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
-
-  final RentalRepository courseRepository =
+  final RentalRepository rentalRepository =
       RentalRepository(RentalDataProvider());
-
-  runApp(
-    CourseApp(courseRepository: courseRepository),
-  );
+  final AuthenticationDataProvider authenticationDataProvider =
+      AuthenticationDataProvider();
+  final AuthenticationRepository authenticationRepository =
+      AuthenticationRepository(dataProvider: authenticationDataProvider);
+  runApp(MyApp(
+    authenticationRepository: authenticationRepository,
+    rentalRepository: rentalRepository,
+  ));
 }
 
-class CourseApp extends StatelessWidget {
-  final RentalRepository courseRepository;
+class MyApp extends StatelessWidget {
+  // const MyApp({Key? key}) : super(key: key);
 
-  CourseApp({required this.courseRepository});
+  final AuthenticationRepository authenticationRepository;
+  final RentalRepository rentalRepository;
+
+  const MyApp({
+    Key? key,
+    required this.authenticationRepository,
+    required this.rentalRepository,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: this.courseRepository,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
             create: (context) =>
-                RentalBloc(rentalRepository: this.courseRepository)
-                  ..add(RentalLoadAll()),
-          ),
-          BlocProvider(
-            create: (context) => ImageBloc(),
-          ),
-        ],
-        child: MaterialApp(
-          title: 'Course App',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          onGenerateRoute: CourseAppRoute.generateRoute,
+                LoginBloc(authenticationRepository: authenticationRepository)),
+        BlocProvider(
+            create: (context) =>
+                SignUpBloc(authenticationRepository: authenticationRepository)),
+        BlocProvider(
+          create: (context) =>
+              RentalBloc(rentalRepository: this.rentalRepository)
+                ..add(RentalLoadAll()),
         ),
+        BlocProvider(
+          create: (context) => ImageBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        onGenerateRoute: AppRouter.generateRoute,
       ),
     );
   }

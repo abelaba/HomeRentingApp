@@ -8,6 +8,7 @@ import 'package:home_renting_app/auth/model/Auth.dart';
 import 'package:home_renting_app/auth/repository/authRepository.dart';
 
 import 'package:home_renting_app/auth/screens/sign_up_view.dart';
+import 'package:home_renting_app/rental/screens/HomeScreen.dart';
 // import 'package:email_validator/email_validator.dart';
 
 class LoginView extends StatefulWidget {
@@ -54,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
                 },
                 listener: (_, state) {
                   if (state is LoggedInState) {
-                    // Navigator.of(context).pushNamed(SignUpView.routeName);
+                    Navigator.of(context).pushNamed(HomeScreen.routeName);
                   }
                 },
               ),
