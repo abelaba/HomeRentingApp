@@ -37,3 +37,12 @@ class ChatLoadFailed extends ChatState {
 }
 
 class ChatCreated extends ChatState {}
+
+class ChatCreateFailed extends ChatState {
+  final Exception exception;
+
+  ChatCreateFailed(this.exception);
+
+  @override
+  List<Object> get props => [];
+}
