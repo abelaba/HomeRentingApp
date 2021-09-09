@@ -19,15 +19,3 @@ class LoadChats extends ChatEvent {
   @override
   List<Object> get props => [];
 }
-
-// class SendMessage extends ChatEvent {
-//   final MessageModel messageModel;
-
-//   SendMessage(this.messageModel);
-// }
-
-// class LoadMessages extends ChatEvent {
-//   final String chatId;
-
-//   LoadMessages(this.chatId);
-// }
