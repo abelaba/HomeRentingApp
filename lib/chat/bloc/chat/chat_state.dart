@@ -27,4 +27,13 @@ class ChatLoaded extends ChatState {
   List<Object> get props => [chats];
 }
 
+class ChatLoadFailed extends ChatState {
+  final Exception exception;
+
+  ChatLoadFailed(this.exception);
+
+  @override
+  List<Object> get props => [];
+}
+
 class ChatCreated extends ChatState {}
