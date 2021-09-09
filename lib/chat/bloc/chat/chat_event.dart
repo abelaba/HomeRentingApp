@@ -20,14 +20,14 @@ class LoadChats extends ChatEvent {
   List<Object> get props => [];
 }
 
-class SendMessage extends ChatEvent {
-  final MessageModel messageModel;
+// class SendMessage extends ChatEvent {
+//   final MessageModel messageModel;
 
-  SendMessage(this.messageModel);
-}
+//   SendMessage(this.messageModel);
+// }
 
-class LoadMessages extends ChatEvent {
-  final String chatId;
+// class LoadMessages extends ChatEvent {
+//   final String chatId;
 
-  LoadMessages(this.chatId);
-}
+//   LoadMessages(this.chatId);
+// }
