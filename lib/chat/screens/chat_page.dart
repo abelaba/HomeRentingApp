@@ -7,3 +7,11 @@ import 'package:home_renting_app/chat/models/ChatModel.dart';
 import 'package:home_renting_app/chat/screens/messages_page.dart';
 
 import '../../routes.dart';
+
+class ChatPage extends StatefulWidget {
+  static const routeName = "chatpage";
+  ChatPage({Key? key}) : super(key: key);
+
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
