@@ -65,3 +65,108 @@ class _IndividualPageState extends State<IndividualPage> {
           ),
         ),
       ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Expanded(
+              // height: MediaQuery.of(context).size.height - 170,
+              child: BlocBuilder<MessageBloc, MessageState>(
+                builder: (ctx, state) {
+                  SchedulerBinding.instance!.addPostFrameCallback((_) {
+                    _scrollController
+                        .jumpTo(_scrollController.position.maxScrollExtent);
+                  });
+                  if (state is MessageLoaded) {
+                    print(state.messages.length);
+                    if (state.messages.length == 0) {
+                      return Center(
+                        child: Text("You dont have any messages"),
+                      );
+                    }
+
+                    return ListView.builder(
+                        controller: _scrollController,
+                        itemCount: state.messages.length,
+                        itemBuilder: (context, index) {
+                          if (index == state.messages.length) {
+                            return Container(
+                              height: 20,
+                            );
+                          }
+
+                          return MessageCard(
+                            message: state.messages.elementAt(index).message!,
+                            time: state.messages.elementAt(index).time!,
+                            senderName:
+                                state.messages.elementAt(index).senderName!,
+                          );
+                        });
+                  }
+
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width - 55,
+                      child: Card(
+                        margin: EdgeInsets.only(left: 5, right: 2, bottom: 10),
+                        child: TextFormField(
+                          controller: _controller,
+                          maxLines: 5,
+                          minLines: 1,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Type a message...",
+                              contentPadding: EdgeInsets.all(10)),
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 7),
+                      child: InkWell(
+                        onTap: () {
+                          print(_controller.text);
+                          print(widget.chatArguments.chatId);
+
+                          BlocProvider.of<MessageBloc>(context).add(SendMessage(
+                              MessageModel(
+                                  chatId: widget.chatArguments.chatId,
+                                  message: _controller.text)));
+                          BlocProvider.of<MessageBloc>(context)
+                              .add(LoadMessages(widget.chatArguments.chatId));
+
+                          _controller.clear();
+                          // print(widget.chatArguments.messages);
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: Colors.green[800],
+                          radius: 25,
+                          child: Icon(
+                            Icons.send,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
