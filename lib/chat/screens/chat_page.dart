@@ -66,6 +66,36 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    BlocProvider.of<ChatBloc>(context).add(LoadChats());
+    return Scaffold(
+      appBar: AppBar(
+        leading: Container(),
+        title: Text("Chats"),
+      ),
+      body: BlocBuilder<ChatBloc, ChatState>(
+        builder: (context, state) {
+          if (state is ChatLoaded) {
+            if (state.chats.length == 0) {
+              return Center(
+                child: Text("You dont have any chats"),
+              );
+            }
+            print(state.chats.elementAt(0).sId);
+
+            return ListView.builder(
+                itemCount: state.chats.length,
+                itemBuilder: (_, idx) =>
+                    _customCard(state.chats.elementAt(idx)));
+          }
+
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
+    );
+  }
+
 
 
 
