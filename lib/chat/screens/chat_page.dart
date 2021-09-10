@@ -89,15 +89,14 @@ class _ChatPageState extends State<ChatPage> {
                 itemBuilder: (_, idx) =>
                     _customCard(state.chats.elementAt(idx)));
           }
+          if (state is ChatLoadFailed) {
+            return Text("Chat load failed");
+          }
 
           return Center(child: CircularProgressIndicator());
         },
       ),
     );
   }
-
-
-
-
 
   }
