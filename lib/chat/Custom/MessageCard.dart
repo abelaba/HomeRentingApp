@@ -43,4 +43,29 @@ class _MessageCardState extends State<MessageCard> {
                   ),
                 ),
               ),
-         
+              Positioned(
+                bottom: 4,
+                right: 10,
+                child: Row(
+                  children: [
+                    Text(
+                      widget.time.substring(12, 16),
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(widget.senderName)
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
