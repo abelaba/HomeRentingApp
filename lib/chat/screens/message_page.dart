@@ -45,6 +45,7 @@ class _IndividualPageState extends State<IndividualPage> {
       appBar: AppBar(
         leadingWidth: 200,
         leading: InkWell(
+          key: const ValueKey("backbutton"),
           onTap: () {
             BlocProvider.of<ChatBloc>(context).add(LoadChats());
             Navigator.of(context).pop();
@@ -134,6 +135,7 @@ class _IndividualPageState extends State<IndividualPage> {
                     Container(
                       margin: EdgeInsets.only(bottom: 7),
                       child: InkWell(
+                        key: const ValueKey("sendbutton"),
                         onTap: () {
                           print(_controller.text);
                           print(widget.chatArguments.chatId);
