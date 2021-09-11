@@ -2,6 +2,8 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:home_renting_app/rental/screens/rental_list.dart';
 import 'package:home_renting_app/rental/screens/rental_listall.dart';
+import 'package:home_renting_app/chat/models/ChatModel.dart';
+import 'package:home_renting_app/chat/screens/chat_page.dart';
 
 import 'package:home_renting_app/auth/screens/user_settings.dart';
 
@@ -41,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             RentalList(),
             RentalListAll(),
-            UserSettingsScreen(),
+            ChatPage(),
+            UserSettingsScreen()
           ],
         ),
       ),
@@ -52,9 +55,34 @@ class _HomeScreenState extends State<HomeScreen> {
           _pageController.jumpToPage(index);
         },
         items: <BottomNavyBarItem>[
-          BottomNavyBarItem(title: Text('Post'), icon: Icon(Icons.home)),
-          BottomNavyBarItem(title: Text('Home'), icon: Icon(Icons.post_add)),
-          BottomNavyBarItem(title: Text('Account'), icon: Icon(Icons.settings)),
+          BottomNavyBarItem(
+              title: Text('Post'),
+              icon: Icon(
+                Icons.home,
+                key: const ValueKey("Post"),
+              )),
+          BottomNavyBarItem(
+              title: Text(
+                'Home',
+              ),
+              icon: Icon(
+                Icons.post_add,
+                key: const ValueKey("Home"),
+              )),
+          BottomNavyBarItem(
+              title: Text(
+                'Chats',
+              ),
+              icon: Icon(
+                Icons.chat,
+                key: const ValueKey("Chats"),
+              )),
+          BottomNavyBarItem(
+              title: Text('Account'),
+              icon: Icon(
+                Icons.settings,
+                key: const ValueKey("Account"),
+              ))
         ],
       ),
     );

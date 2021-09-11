@@ -4,7 +4,7 @@ import 'package:home_renting_app/chat/bloc/chat/chat_bloc.dart';
 import 'package:home_renting_app/chat/bloc/chat/chat_event.dart';
 import 'package:home_renting_app/chat/bloc/chat/chat_state.dart';
 import 'package:home_renting_app/chat/models/ChatModel.dart';
-import 'package:home_renting_app/chat/screens/messages_page.dart';
+import 'package:home_renting_app/chat/screens/message_page.dart';
 
 import '../../routes.dart';
 
@@ -98,5 +98,4 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
-
-  }
+}

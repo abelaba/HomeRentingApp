@@ -45,7 +45,9 @@ class _SignUpViewState extends State<SignUpView> {
               if (state is SignUpSuccessState) {
                 return Text("SignedUp");
               } else if (state is SignUpFailureState) {
-                return Text("${state.exception}");
+                return Text("${state.exception.toString().substring(
+                      10,
+                    )}");
               }
               return Text("Hello");
             }, listener: (_, state) {
@@ -77,6 +79,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   Widget _nameField() {
     return TextFormField(
+      key: const ValueKey("signupnamefield"),
       decoration: InputDecoration(
         icon: Icon(Icons.person),
         hintText: 'Name',
@@ -96,6 +99,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   Widget _emailField() {
     return TextFormField(
+      key: const ValueKey("signupemailfield"),
       decoration: InputDecoration(
         icon: Icon(Icons.email),
         hintText: 'Email',
@@ -113,6 +117,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   Widget _passwordField() {
     return TextFormField(
+      key: const ValueKey("signuppasswordfield"),
       obscureText: true,
       decoration: InputDecoration(
         icon: Icon(Icons.security),
@@ -133,6 +138,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   Widget _phoneNumber() {
     return TextFormField(
+      key: const ValueKey("phonenumberfield"),
       decoration: InputDecoration(
         icon: Icon(Icons.phone),
         hintText: 'Phone Number',
@@ -152,6 +158,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   Widget _signUpButton() {
     return ElevatedButton(
+      key: const ValueKey("signupbutton"),
       onPressed: () async {
         final form = _formKey.currentState;
         if (form != null && form.validate()) {

@@ -60,7 +60,6 @@ class _IndividualPageState extends State<IndividualPage> {
                 child: Icon(Icons.person),
                 radius: 20,
               ),
-              Text(widget.chatArguments.user1Name),
             ],
           ),
         ),

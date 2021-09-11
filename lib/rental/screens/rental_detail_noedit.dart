@@ -2,6 +2,12 @@ import 'package:home_renting_app/rental/blocs/blocs.dart';
 import 'package:home_renting_app/rental/models/rental.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_renting_app/chat/models/ChatModel.dart';
+import 'package:home_renting_app/chat/screens/chat_page.dart';
+import 'package:home_renting_app/chat/bloc/chat/chat_event.dart';
+import 'package:home_renting_app/chat/bloc/chat/chat_state.dart';
+import 'package:home_renting_app/chat/bloc/chat/chat_bloc.dart';
+import 'package:home_renting_app/rental/screens/HomeScreen.dart';
 
 import 'rental_add_update.dart';
 import '../../routes.dart';
@@ -11,7 +17,9 @@ class RentalDetailNoEdit extends StatelessWidget {
   static const routeName = 'rentalDetailNoedit';
   final Rental rental;
 
-  RentalDetailNoEdit({required this.rental});
+  bool loggedIn;
+
+  RentalDetailNoEdit({required this.rental, this.loggedIn = true});
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +27,46 @@ class RentalDetailNoEdit extends StatelessWidget {
       appBar: AppBar(
         title: Text('${this.rental.address}'),
       ),
-      body: Card(
-        child: Column(
-          children: [
-            ListTile(
-              title: Text('Title: ${this.rental.address}'),
-              subtitle: Image.network(
-                  "http://10.0.2.2:3000/${this.rental.rentalImage}"),
-            ),
-            Text(
-              'Details',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      body: BlocListener<ChatBloc, ChatState>(
+        listener: (ctx, state) {
+          if (state is ChatCreated) {
+            Navigator.of(context).pushNamed(HomeScreen.routeName);
+          }
+        },
+        child: Card(
+          child: Column(
+            children: [
+              ListTile(
+                title: Text('Title: ${this.rental.address}'),
+                subtitle: Image.network(
+                    "http://10.0.2.2:3000/${this.rental.rentalImage}"),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(this.rental.date ?? ""),
-          ],
+              Text(
+                'Details',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(this.rental.date ?? ""),
+              ElevatedButton(
+                  onPressed: () {
+                    if (loggedIn) {
+                      BlocProvider.of<ChatBloc>(context).add(CreateChat(
+                          chatModel: ChatModel(user2Id: this.rental.userId)));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("You must login"),
+                        duration: Duration(seconds: 2),
+                      ));
+                    }
+                  },
+                  child: Text("Start chat"))
+            ],
+          ),
         ),
       ),
     );

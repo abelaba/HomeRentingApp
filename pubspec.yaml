@@ -37,8 +37,15 @@ dependencies:
   bottom_navy_bar: ^6.0.0
 
 dev_dependencies:
+  # mockito: ^5.0.15
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  test: ^1.16.5
+  path_provider: ^2.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

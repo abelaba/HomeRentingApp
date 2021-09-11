@@ -47,6 +47,7 @@ class AuthenticationDataProvider {
       print(response.body);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('auth-token', response.body);
+      prefs.setString("userId", response.body);
       print("Logged in from data provider");
       return response.body;
     } else if (response.statusCode == 400) {
